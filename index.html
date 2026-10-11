@@ -3,123 +3,72 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>まつたけと、とろろと、つくったアプリ</title>
-  <meta name="description" content="まつたけ、とろろ、ねこ手帳とReward Calendarの紹介。">
-  <meta property="og:title" content="まつたけと、とろろと、つくったアプリ">
-  <meta property="og:description" content="まつたけ、とろろ、猫の生活記録アプリ『ねこ手帳』の紹介。">
+  <title>Matsutakepon | Profile &amp; Works</title>
+  <meta name="description" content="Matsutakeponのプロフィールと、個人で制作しているiPhoneアプリ・Webアプリの紹介。">
+  <meta property="og:title" content="Matsutakepon | Profile & Works">
+  <meta property="og:description" content="プロフィールと個人制作のアプリを紹介しています。">
   <meta property="og:type" content="website">
   <meta property="og:image" content="https://matsutakepon.github.io/assets/og-v2.png">
   <link rel="icon" href="assets/favicon.svg">
-  <link rel="stylesheet" href="styles.css?v=4">
+  <link rel="stylesheet" href="styles.css?v=5">
 </head>
 <body>
   <header class="nav shell">
+    <a class="site-name" href="#top">Matsutakepon</a>
     <nav aria-label="メインナビゲーション">
-      <a href="#cats">まつたけ・とろろ</a>
-      <a href="#work">ねこ手帳</a>
-      <a href="#reward">Reward Calendar</a>
-      <a href="#nail">ネイルシミュレーター（仮）</a>
+      <a href="#profile">プロフィール</a><a href="#cats">猫</a><a href="#works">つくったもの</a>
+      <a href="https://github.com/Matsutakepon" target="_blank" rel="noreferrer">GitHub</a>
     </nav>
-    <a class="github-head" href="https://github.com/Matsutakepon" target="_blank" rel="noreferrer">GitHub</a>
   </header>
-
   <main>
-    <section class="hero-art" id="top">
-      <img src="assets/cats-watercolor-hero-v2.png" alt="窓辺でのんびり過ごす、とろろとまつたけの水彩画">
+    <section class="hero-art" id="top"><img src="assets/cats-watercolor-hero-v2.png" alt="窓辺でのんびり過ごす、とろろとまつたけの水彩画"></section>
+    <section class="profile shell" id="profile">
+      <div class="section-head"><p class="section-kicker">PROFILE</p><h1>プロフィール</h1></div>
+      <div class="profile-grid">
+        <figure class="profile-photo"><img src="assets/profile-akira.jpg" alt="マイクを持って話しているプロフィール写真"></figure>
+        <div class="profile-copy">
+          <p class="profile-lead">基幹業務システムのITエンジニアとして約5年、開発や運用に携わりました。その後は人事・採用へ移り、スタートアップから大手コンサルティングファームまで、幅広い企業の採用を支援してきました。</p>
+          <p>現在はProgateでタレントコンシェルジュとして、学習者の方々をサポートしています。個人でも、日々の生活で「こういうものが欲しい」と思ったことをきっかけに、iPhoneアプリやWebアプリをつくっています。</p>
+          <dl class="career-list">
+            <div><dt>ITエンジニア</dt><dd>基幹業務システムの開発・運用／約5年</dd></div>
+            <div><dt>人事・採用</dt><dd>スタートアップから大手コンサルまで採用を支援</dd></div>
+            <div><dt>現在</dt><dd>Progate タレントコンシェルジュ／学習者サポート</dd></div>
+          </dl>
+        </div>
+      </div>
     </section>
-
     <section class="cats shell" id="cats">
-      <div class="section-head"><h1>まつたけととろろ</h1></div>
+      <div class="section-head"><p class="section-kicker">CATS</p><h1>まつたけととろろ</h1></div>
       <div class="cat-grid">
-        <article class="cat-card">
-          <div class="cat-portrait"><img src="assets/matsutake-sketch.png" alt="まつたけのスケッチ画"></div>
-          <div class="cat-info">
-            <h2>まつたけ</h2>
-            <p>毎朝4時ごろに起こしにくる、優しい性格。</p>
-          </div>
-        </article>
-        <article class="cat-card">
-          <div class="cat-portrait"><img src="assets/tororo-sketch-v2.png" alt="とろろのスケッチ画"></div>
-          <div class="cat-info">
-            <h2>とろろ</h2>
-            <p>作業中にキーボードの上に座りに来るくらい甘えん坊。</p>
-          </div>
-        </article>
+        <article class="cat-card"><div class="cat-portrait"><img src="assets/matsutake-sketch.png" alt="まつたけのスケッチ画"></div><div class="cat-info"><h2>まつたけ</h2><p>毎朝4時ごろに起こしにくる、優しい性格。</p></div></article>
+        <article class="cat-card"><div class="cat-portrait"><img src="assets/tororo-sketch-v2.png" alt="とろろのスケッチ画"></div><div class="cat-info"><h2>とろろ</h2><p>作業中にキーボードの上に座りに来るくらい甘えん坊。</p></div></article>
       </div>
     </section>
-
-    <section class="work" id="work">
-      <div class="shell">
-        <div class="section-head light"><h1>ねこ手帳</h1></div>
-        <article class="project-card">
-          <div class="app-visual">
-            <img class="screen screen-back" src="assets/neko-techo-timer.png" alt="ねこ手帳の遊びタイマー画面">
-            <img class="screen screen-front" src="assets/neko-techo-home.png" alt="ねこ手帳のホーム画面">
-          </div>
-          <div class="project-copy">
-            <h2>ねこ手帳</h2>
-            <p>日々のお世話や体調、遊んだ時間まで。二匹との暮らしで本当に欲しかったものをまとめた猫の生活記録アプリです。</p>
-            <ul>
-              <li>ごはん・ブラッシングなどのお世話を記録</li>
-              <li>遊んだ時間をタイマーで計測</li>
-              <li>猫ごとに記録を分けて管理</li>
-            </ul>
-            <a class="app-store-link" href="https://apps.apple.com/jp/app/%E3%81%AD%E3%81%93%E3%81%AE%E6%9A%AE%E3%82%89%E3%81%97%E6%89%8B%E5%B8%B3-%E3%81%8A%E4%B8%96%E8%A9%B1%E3%81%A8%E5%81%A5%E5%BA%B7%E8%A8%98%E9%8C%B2/id6797259554" target="_blank" rel="noreferrer">App Storeで見る <span aria-hidden="true">↗</span></a>
-          </div>
-        </article>
+    <div class="works-title shell" id="works"><p class="section-kicker">WORKS</p><h1>つくったもの</h1></div>
+    <section class="work" id="neko"><div class="shell"><article class="project-card">
+      <div class="app-visual"><img class="screen screen-back" src="assets/neko-techo-timer.png" alt="ねこの暮らし手帳の遊びタイマー画面"><img class="screen screen-front" src="assets/neko-techo-home.png" alt="ねこの暮らし手帳のホーム画面"></div>
+      <div class="project-copy"><div class="meta"><span>iPhone</span><span>公開中</span><span>個人制作</span></div><h2>ねこの暮らし手帳</h2>
+        <p>毎日のお世話、体調、遊んだ時間をまとめて残せる猫の生活記録アプリです。二匹と暮らす中で、記録したい内容が複数の場所に分かれてしまう不便をなくすためにつくりました。</p>
+        <h3>できること</h3><ul><li>ごはん・ブラッシングなど、日々のお世話を猫ごとに記録</li><li>体調や健康に関する記録をカレンダーで振り返る</li><li>遊びタイマーで一緒に遊んだ時間を計測・保存</li><li>大切な記録をiCloud Driveへバックアップ</li></ul>
+        <a class="project-link" href="https://apps.apple.com/jp/app/%E3%81%AD%E3%81%93%E3%81%AE%E6%9A%AE%E3%82%89%E3%81%97%E6%89%8B%E5%B8%B3-%E3%81%8A%E4%B8%96%E8%A9%B1%E3%81%A8%E5%81%A5%E5%BA%B7%E8%A8%98%E9%8C%B2/id6797259554" target="_blank" rel="noreferrer">App Storeで見る <span aria-hidden="true">↗</span></a>
       </div>
-    </section>
-
-    <section class="reward" id="reward">
-      <div class="shell">
-        <div class="section-head"><h1>Reward Calendar</h1></div>
-        <article class="reward-card">
-          <div class="reward-gallery">
-            <img class="reward-screen reward-screen-one" src="assets/reward-calendar-home.jpg" alt="Reward Calendarのカレンダー画面">
-            <img class="reward-screen reward-screen-two" src="assets/reward-calendar-progress.jpg" alt="Reward Calendarの達成率とご褒美画面">
-            <img class="reward-screen reward-screen-three" src="assets/reward-calendar-shop.jpg" alt="Reward Calendarのスタンプショップ画面">
-          </div>
-          <div class="reward-copy">
-            <h2>Reward Calendar</h2>
-            <p>毎日の目標を記録して、できた日にスタンプ。続けた分だけポイントが貯まり、自分で決めたご褒美と交換できるアプリです。</p>
-            <ul>
-              <li>目標を達成した日をカレンダーに記録</li>
-              <li>連続達成日数と月間達成率を確認</li>
-              <li>ポイントをご褒美やスタンプと交換</li>
-            </ul>
-            <a class="app-store-link" href="https://apps.apple.com/jp/app/reward-calendar/id6797688658" target="_blank" rel="noreferrer">App Storeで見る <span aria-hidden="true">↗</span></a>
-          </div>
-        </article>
+    </article></div></section>
+    <section class="reward" id="reward"><div class="shell"><article class="reward-card">
+      <div class="reward-gallery"><img class="reward-screen reward-screen-one" src="assets/reward-calendar-home.jpg" alt="Reward Calendarのカレンダー画面"><img class="reward-screen reward-screen-two" src="assets/reward-calendar-progress.jpg" alt="Reward Calendarの達成率とご褒美画面"><img class="reward-screen reward-screen-three" src="assets/reward-calendar-shop.jpg" alt="Reward Calendarのスタンプショップ画面"></div>
+      <div class="project-copy"><div class="meta"><span>iPhone</span><span>公開中</span><span>個人制作</span></div><h2>Reward Calendar</h2>
+        <p>毎日の小さな目標を記録し、達成した日にスタンプを押すアプリです。続けた分だけポイントが貯まり、自分で決めたご褒美と交換できます。</p>
+        <h3>できること</h3><ul><li>毎日の目標を登録し、達成した日をカレンダーに記録</li><li>連続達成日数と月間達成率で、続けた結果を確認</li><li>達成ポイントを自分で決めたご褒美と交換</li><li>貯めたポイントでスタンプを選び、カレンダーを変更</li></ul>
+        <a class="project-link" href="https://apps.apple.com/jp/app/reward-calendar/id6797688658" target="_blank" rel="noreferrer">App Storeで見る <span aria-hidden="true">↗</span></a>
       </div>
-    </section>
-    <section class="nail" id="nail">
-      <div class="shell">
-        <div class="section-head"><h1>ネイルシミュレーター（仮）</h1></div>
-        <article class="nail-card">
-          <div class="nail-gallery">
-            <img class="nail-screen nail-screen-back" src="assets/nail-simulator-colors-cropped.jpg" alt="ネイルシミュレーターのカラー選択画面">
-            <img class="nail-screen nail-screen-front" src="assets/nail-simulator-parts-cropped.jpg" alt="ネイルシミュレーターのパーツ配置画面">
-          </div>
-          <div class="nail-copy">
-            <p class="status-label">製作中</p>
-            <h2>ネイルシミュレーター（仮）</h2>
-            <p>ベースカラーやパーツを選び、ネイルデザインを画面上で試せるシミュレーターです。</p>
-            <ul>
-              <li>ベースカラーを選択</li>
-              <li>爪ごとにデザインを確認</li>
-              <li>パーツの配置・質感・サイズを調整</li>
-            </ul>
-          </div>
-        </article>
+    </article></div></section>
+    <section class="nail" id="nail"><div class="shell"><article class="nail-card">
+      <div class="nail-gallery"><img class="nail-screen nail-screen-back" src="assets/nail-simulator-colors-cropped.jpg" alt="ネイルシミュレーターのカラー選択画面"><img class="nail-screen nail-screen-front" src="assets/nail-simulator-parts-cropped.jpg" alt="ネイルシミュレーターのパーツ配置画面"></div>
+      <div class="project-copy"><div class="meta"><span>Web</span><span>制作中</span><span>スマホアプリ化予定</span></div><h2>ネイルシミュレーター（仮）</h2>
+        <p>色やパーツを選び、ネイルデザインを画面上で組み立てて確認できるシミュレーターです。現在はWeb版を制作中で、最終的にはスマートフォンアプリとして公開する予定です。</p>
+        <h3>現在できること</h3><ul><li>プリセットまたはカスタムカラーからベース色を選択</li><li>五本表示と一本表示を切り替え、爪ごとにデザイン</li><li>パーツの配置、質感、色、サイズ、立体感を調整</li><li>カメラ撮影または写真を読み込み、デザインを確認</li></ul>
       </div>
-    </section>
+    </article></div></section>
   </main>
-
-  <footer>
-    <div class="shell">
-      <a class="footer-github" href="https://github.com/Matsutakepon" target="_blank" rel="noreferrer">GitHub</a>
-      <div class="copyright"><span>© 2026</span><a href="#top">ページ上部へ</a></div>
-    </div>
-  </footer>
+  <footer><div class="shell"><a class="footer-github" href="https://github.com/Matsutakepon" target="_blank" rel="noreferrer">GitHubを見る ↗</a><div class="copyright"><span>© 2026 Matsutakepon</span><a href="#top">ページ上部へ</a></div></div></footer>
 </body>
 </html>
