@@ -60,15 +60,17 @@
         <p>毎日のお世話、健康、通院、遊び、予定を猫ごとにまとめて残せる、ローカルファーストの記録アプリです。二匹と暮らす中で、記録したい内容が複数の場所に分かれてしまう不便をなくすためにつくりました。</p>
         <h3>できること</h3><ul><li>お世話・体重・食事・水分・投薬・通院を猫ごとに記録</li><li>カレンダーとグラフで日々の変化を振り返る</li><li>ホーム画面ウィジェットからお世話や遊びを操作</li><li>期間を指定した診察用まとめをPDFで保存</li><li>写真を含むバックアップを暗号化して保存・復元</li></ul>
         <h3>技術構成</h3><div class="tech-stack" aria-label="使用技術"><span>React 19</span><span>TypeScript</span><span>Vite</span><span>Capacitor 8</span><span>SQLite</span><span>SwiftUI</span><span>WidgetKit</span><span>Vitest</span></div>
-        <h3>実装・設計のポイント</h3><ul class="engineering-list"><li><strong>ローカルファースト</strong> — 構造化データは正規化したSQLite、写真はアプリ専用領域に保存。アカウントや外部サーバーを必要としない構成。</li><li><strong>WebとiOSの連携</strong> — React／TypeScriptのUIをCapacitorでiOS化し、通知・生体認証・ファイル共有などの端末機能と接続。</li><li><strong>ウィジェット連携</strong> — SwiftUI／WidgetKitとApp Groupを使用。ウィジェット操作を一時保存し、アプリ起動時に正式な履歴としてSQLiteへ反映。</li><li><strong>データ保護</strong> — 写真を含むバックアップ、AES-256-GCM暗号化、スキーマ更新と復元時のトランザクション処理に対応。</li><li><strong>業務ロジックのテスト</strong> — お世話・遊び・在庫消費・SQLite接続などを分離し、Vitestで単体テストを実施。</li></ul>
+        <h3>実装・設計のポイント</h3><ul class="engineering-list"><li><strong>ローカルファースト</strong> — 構造化データは正規化したSQLite、写真はアプリ専用領域に保存。アカウントや外部サーバーを必要としない構成。</li><li><strong>WebとiOSの連携</strong> — React／TypeScriptのUIをCapacitorでiOS化し、通知・生体認証・ファイル共有などの端末機能と接続。</li><li><strong>ウィジェット連携</strong> — SwiftUI／WidgetKitとApp Groupを使用。ウィジェット操作を一時保存し、アプリ起動時に正式な履歴としてSQLiteへ反映。</li><li><strong>データ保護</strong> — 写真を含むバックアップ、AES-256-GCM暗号化、スキーマ更新と復元時のトランザクション処理に対応。</li><li><strong>記録の整合性</strong> — お世話の取り消しや在庫の増減で数字がずれないよう、ロジックを分離して自動テストで確認。</li></ul>
         <a class="project-link" href="https://apps.apple.com/jp/app/%E3%81%AD%E3%81%93%E3%81%AE%E6%9A%AE%E3%82%89%E3%81%97%E6%89%8B%E5%B8%B3-%E3%81%8A%E4%B8%96%E8%A9%B1%E3%81%A8%E5%81%A5%E5%BA%B7%E8%A8%98%E9%8C%B2/id6797259554" target="_blank" rel="noreferrer">App Storeで見る <span aria-hidden="true">↗</span></a>
       </div>
     </article></div></section>
     <section class="reward" id="reward"><div class="shell"><article class="reward-card">
       <div class="reward-gallery"><img class="reward-screen reward-screen-one" src="assets/reward-calendar-home.jpg" alt="Reward Calendarのカレンダー画面"><img class="reward-screen reward-screen-two" src="assets/reward-calendar-progress.jpg" alt="Reward Calendarの達成率とご褒美画面"><img class="reward-screen reward-screen-three" src="assets/reward-calendar-shop.jpg" alt="Reward Calendarのスタンプショップ画面"></div>
       <div class="project-copy"><div class="meta"><span>iPhone</span><span>公開中</span><span>個人制作</span></div><h2>Reward Calendar</h2>
-        <p>毎日の小さな目標を記録し、達成した日にスタンプを押すアプリです。続けた分だけポイントが貯まり、自分で決めたご褒美と交換できます。</p>
-        <h3>できること</h3><ul><li>毎日の目標を登録し、達成した日をカレンダーに記録</li><li>連続達成日数と月間達成率で、続けた結果を確認</li><li>達成ポイントを自分で決めたご褒美と交換</li><li>貯めたポイントでスタンプを選び、カレンダーを変更</li></ul>
+        <p>毎日の小さな目標をスタンプで記録し、達成をポイントと自分へのご褒美につなげる習慣化アプリです。記録を義務にせず、操作した瞬間に楽しい反応が返ることを意識してつくりました。</p>
+        <h3>できること</h3><ul><li>自由に目標を作成し、今日または過去の日付へ達成スタンプ</li><li>連続達成日数、月間達成率、過去6か月の推移を確認</li><li>ポイントを自分で決めたご褒美、スタンプ、テーマと交換</li><li>写真と一言をフォトログに残し、リマインド通知を設定</li><li>目標・達成記録・写真・設定をまとめてバックアップ・復元</li></ul>
+        <h3>技術構成</h3><div class="tech-stack" aria-label="使用技術"><span>Swift</span><span>SwiftUI</span><span>SQLite3</span><span>UIKit</span><span>UserNotifications</span><span>Canvas</span><span>XCTest</span><span>iOS 17+</span></div>
+        <h3>実装・設計のポイント</h3><ul class="engineering-list"><li><strong>ネイティブ構成</strong> — SwiftUIを中心に、カメラ・触覚フィードバック・通知などはUIKitやiOSの標準APIと連携。</li><li><strong>ポイントの整合性</strong> — 達成、交換、スタンプ購入をSQLiteのポイント台帳とトランザクションで管理。使いすぎや二重購入を防止。</li><li><strong>達成時の体験</strong> — スタンプのスプリングアニメーションに加え、CanvasとTimelineViewで紙吹雪・花火を描画し、触覚フィードバックも連動。</li><li><strong>写真の扱い</strong> — オリジナルとサムネイルを分けて端末内に保存し、一覧表示では画像をダウンサンプリングして読み込み。</li><li><strong>安全な復元</strong> — SQLiteの整合性とファイル名を検証してから復元し、失敗時は復元前のデータへ戻す設計。</li></ul>
         <a class="project-link" href="https://apps.apple.com/jp/app/reward-calendar/id6797688658" target="_blank" rel="noreferrer">App Storeで見る <span aria-hidden="true">↗</span></a>
       </div>
     </article></div></section>
@@ -84,4 +86,5 @@
   <footer><div class="shell"><a class="footer-github" href="https://github.com/Matsutakepon" target="_blank" rel="noreferrer">GitHubを見る ↗</a><div class="copyright"><span>© 2026 Matsutakepon</span><a href="#top">ページ上部へ</a></div></div></footer>
 </body>
 </html>
+
 
