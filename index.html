@@ -120,6 +120,7 @@
       const screen = document.querySelector('#mockScreen');
       const title = document.querySelector('#mockTitle');
       let lastTrigger = null;
+      let frameObserver = null;
 
       const apps = {
         neko: {
@@ -147,6 +148,17 @@
         frame.loading = 'eager';
         frame.allow = 'camera; clipboard-write';
         screen.replaceChildren(frame);
+        const fitFrame = () => {
+          const scale = screen.clientWidth / 393;
+          frame.style.width = '393px';
+          frame.style.height = '852px';
+          frame.style.transform = `scale(${scale})`;
+        };
+        fitFrame();
+        frameObserver?.disconnect();
+        frameObserver = new ResizeObserver(fitFrame);
+        frameObserver.observe(screen);
+        frame.addEventListener('load', fitFrame, { once: true });
         modal.hidden = false;
         document.body.classList.add('mock-active');
         requestAnimationFrame(() => modal.classList.add('show'));
@@ -158,6 +170,9 @@
         document.body.classList.remove('mock-active');
         setTimeout(() => {
           modal.hidden = true;
+          frameObserver?.disconnect();
+          frameObserver = null;
+          screen.querySelector('iframe')?.remove();
           screen.innerHTML = '';
           lastTrigger?.focus();
         }, 260);

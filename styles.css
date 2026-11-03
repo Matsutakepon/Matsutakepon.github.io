@@ -68,6 +68,11 @@ footer{background:var(--orange);padding:72px 0 34px}.footer-github{font-size:14p
 
 /* The portfolio demos run inside the phone rather than displaying screenshots. */
 .mock-stage{grid-template-rows:1fr auto}
-.mock-screen iframe{display:block;width:100%;height:100%;border:0;background:#fff}
+.mock-screen iframe{display:block;width:393px;height:852px;border:0;background:#fff;transform-origin:top left}
 .mock-screen{cursor:default}
 .mock-phone:has(.mock-screen[data-kind="naile"]){background:#111915}
+.mock-dialog{height:min(980px,calc(100vh - 12px))}
+.mock-toolbar{height:60px}
+.mock-stage{padding:8px;gap:8px}
+.mock-phone{width:min(390px,45vh,calc(100vw - 48px))}
+@media(max-width:760px){.mock-phone{width:min(390px,46vh,calc(100vw - 16px))}}
