@@ -97,3 +97,6 @@ footer{background:var(--orange);padding:72px 0 34px}.footer-github{font-size:14p
 .mock-phone{z-index:6;width:min(410px,41vh,calc(100vw - 20px))}
 .mock-stage>p{color:rgba(255,255,255,.78);text-shadow:0 1px 10px rgba(0,0,0,.6)}
 @media(max-width:760px){.mock-dialog{height:calc(100dvh - 24px)}.mock-toolbar>div{display:none}.mock-close{top:12px;right:12px}.mock-phone{width:min(410px,41vh,calc(100vw - 16px))}}
+
+/* Keep embedded app corners beneath the black device bezel. */
+.mock-phone:after{content:"";position:absolute;z-index:7;inset:7px;border:4px solid #111915;border-radius:37px;pointer-events:none}
