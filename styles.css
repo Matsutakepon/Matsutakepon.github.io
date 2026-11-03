@@ -76,3 +76,14 @@ footer{background:var(--orange);padding:72px 0 34px}.footer-github{font-size:14p
 .mock-stage{padding:8px;gap:8px}
 .mock-phone{width:min(390px,45vh,calc(100vw - 48px))}
 @media(max-width:760px){.mock-phone{width:min(390px,46vh,calc(100vw - 16px))}}
+
+/* Keep the presentation focused on the device and tuck native scrollbars under its bezel. */
+.mock-dialog{width:min(520px,100%)}
+.mock-stage{padding-inline:6px}
+.mock-phone{width:min(410px,46vh,calc(100vw - 20px))}
+.mock-screen::after{content:"";position:absolute;z-index:6;top:0;right:0;bottom:0;width:8px;background:#111915;pointer-events:none}
+.mock-stage>p{max-width:390px;text-align:center}
+@media(max-width:760px){
+  .mock-dialog{width:100%}
+  .mock-phone{width:min(410px,47vh,calc(100vw - 8px))}
+}
