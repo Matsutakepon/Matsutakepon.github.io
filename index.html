@@ -10,7 +10,7 @@
   <meta property="og:type" content="website">
   <meta property="og:image" content="https://matsutakepon.github.io/assets/og-v2.png">
   <link rel="icon" href="assets/favicon.svg">
-  <link rel="stylesheet" href="styles.css?v=11">
+  <link rel="stylesheet" href="styles.css?v=12">
 </head>
 <body>
   <header class="nav shell">
@@ -147,6 +147,9 @@
         frame.title = app.title + ' 操作デモ';
         frame.loading = 'eager';
         frame.allow = 'camera; clipboard-write';
+        frame.style.position = 'absolute';
+        frame.style.inset = '0';
+        frame.style.transformOrigin = 'top left';
         screen.replaceChildren(frame);
         const fitFrame = () => {
           const scale = screen.clientWidth / 393;
