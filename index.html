@@ -10,7 +10,7 @@
   <meta property="og:type" content="website">
   <meta property="og:image" content="https://matsutakepon.github.io/assets/og-v2.png">
   <link rel="icon" href="assets/favicon.svg">
-  <link rel="stylesheet" href="styles.css?v=9">
+  <link rel="stylesheet" href="styles.css?v=10">
 </head>
 <body>
   <header class="nav shell">
@@ -94,12 +94,12 @@
         <button type="button" class="mock-close" data-mock-close aria-label="モックアップを閉じる">×</button>
       </header>
       <div class="mock-stage">
+        <div class="mock-scenes" id="mockScenes" aria-label="表示する画面"></div>
         <div class="mock-phone">
-          <div class="mock-phone-bar"><span>9:41</span><i></i><span>● ◒</span></div>
-          <div class="mock-screen" id="mockScreen"></div>
+          <div class="mock-screen" id="mockScreen" aria-live="polite"></div>
           <div class="mock-home-indicator"></div>
         </div>
-        <p>画面内をタップして操作できます。保存はされません。</p>
+        <p>実際のアプリ画面を使用しています。画面または上の項目をタップすると切り替わります。</p>
       </div>
     </section>
   </div>
@@ -119,71 +119,60 @@
     (() => {
       const modal = document.querySelector('#mockModal');
       const screen = document.querySelector('#mockScreen');
+      const scenesBar = document.querySelector('#mockScenes');
       const title = document.querySelector('#mockTitle');
       let lastTrigger = null;
-      let timerID = null;
-      let seconds = 0;
+      let activeKind = '';
+      let activeIndex = 0;
 
-      const views = {
-        neko: `
-          <div class="demo demo-neko">
-            <div class="demo-head"><div class="demo-logo">ねこ手帳</div><button aria-label="メニュー">☰</button></div>
-            <div class="neko-hero"><div><small>きょう</small><h3 data-cat-name>まつたけ</h3><p data-cat-note>毎朝4時ごろに起こしにきます</p></div><div class="neko-avatar">🐈</div></div>
-            <div class="neko-tabs"><button class="active" data-cat="まつたけ">まつたけ</button><button data-cat="とろろ">とろろ</button></div>
-            <div class="demo-section-title"><strong>きょうのお世話</strong><span data-care-count>0 / 3</span></div>
-            <div class="care-list">
-              <button data-care><span>🐟</span><b>おやつ</b><i>✓</i></button>
-              <button data-care><span>🪮</span><b>ブラッシング</b><i>✓</i></button>
-              <button data-care><span>💊</span><b>お薬</b><i>✓</i></button>
-            </div>
-            <div class="play-card"><div><small>遊びタイマー</small><strong data-timer>00:00</strong></div><button data-timer-toggle>スタート</button></div>
-            <nav class="demo-nav"><b>✓<small>今日</small></b><b>♡<small>健康</small></b><b>▦<small>カレンダー</small></b></nav>
-          </div>`,
-        reward: `
-          <div class="demo demo-reward">
-            <div class="reward-title">Reward Calendar</div>
-            <div class="reward-goal-head"><h3>今日の目標</h3><span data-points>0 pt</span></div>
-            <button class="reward-goal" data-stamp><span>✓</span><div><b>15分だけ集中する</b><small>できたらタップ！</small></div><i>♡</i></button>
-            <div class="reward-calendar">
-              <div class="calendar-head"><button>‹</button><b>11月</b><button>›</button></div>
-              <div class="week"><span>日</span><span>月</span><span>火</span><span>水</span><span>木</span><span>金</span><span>土</span></div>
-              <div class="days"><button class="" data-day="1">1</button><button class="done" data-day="2">2</button><button class="" data-day="3">3</button><button class="" data-day="4">4</button><button class="done" data-day="5">5</button><button class="" data-day="6">6</button><button class="" data-day="7">7</button><button class="" data-day="8">8</button><button class="done" data-day="9">9</button><button class="" data-day="10">10</button><button class="" data-day="11">11</button><button class="" data-day="12">12</button><button class="" data-day="13">13</button><button class="" data-day="14">14</button><button class="" data-day="15">15</button><button class="" data-day="16">16</button><button class="" data-day="17">17</button><button class="" data-day="18">18</button><button class="" data-day="19">19</button><button class="" data-day="20">20</button><button class="" data-day="21">21</button><button class="" data-day="22">22</button><button class="" data-day="23">23</button><button class="" data-day="24">24</button><button class="" data-day="25">25</button><button class="" data-day="26">26</button><button class="" data-day="27">27</button><button class="" data-day="28">28</button></div>
-            </div>
-            <div class="reward-stats"><div><small>連続達成</small><b data-streak>3日</b></div><div><small>今月の達成率</small><b data-rate>11%</b></div></div>
-            <button class="reward-shop" data-reward>5 ptでご褒美を見る <span>→</span></button>
-            <nav class="demo-nav"><b>♥<small>カレンダー</small></b><b>▣<small>フォトログ</small></b><b>⌂<small>ショップ</small></b></nav>
-          </div>`,
-        naile: `
-          <div class="demo demo-naile">
-            <div class="naile-head"><em>nailé.</em><button>保存</button></div>
-            <div class="naile-preview">
-              <small>NAIL PREVIEW</small>
-              <div class="nails">
-                <button data-nail style="--nail-scale:.86"></button><button data-nail style="--nail-scale:1"></button><button class="active" data-nail style="--nail-scale:1.06"></button><button data-nail style="--nail-scale:.98"></button><button data-nail style="--nail-scale:.78"></button>
-              </div>
-              <b data-color-name>Bare Petal</b>
-            </div>
-            <div class="naile-panel"><small>01 BASE COLOR</small><h3>ベースカラー</h3>
-              <div class="swatches"><button data-color="#8e1838" data-name="Bordeaux"></button><button data-color="#c74b68" data-name="Rose"></button><button data-color="#e9858c" data-name="Coral"></button><button class="active" data-color="#e9b8a8" data-name="Bare Petal"></button><button data-color="#8a9a82" data-name="Sage"></button><button data-color="#5d7598" data-name="Dusty Blue"></button></div>
-            </div>
-            <div class="naile-panel"><small>02 ACCENT</small><h3>パーツを置く</h3>
-              <div class="parts"><button data-part="✦">✦</button><button data-part="●">●</button><button data-part="♡">♡</button><button data-part="◇">◇</button></div>
-              <p data-part-note>パーツを選んで、選択中の爪に置けます。</p>
-            </div>
-          </div>`
+      const apps = {
+        neko: {
+          title: 'ねこの暮らし手帳',
+          scenes: [
+            { label: '今日', src: 'assets/neko-techo-home.png', alt: 'ねこの暮らし手帳の今日のお世話画面' },
+            { label: '遊びタイマー', src: 'assets/neko-techo-timer.png', alt: 'ねこの暮らし手帳の遊びタイマー画面' }
+          ]
+        },
+        reward: {
+          title: 'Reward Calendar',
+          scenes: [
+            { label: 'カレンダー', src: 'assets/reward-calendar-home.jpg', alt: 'Reward Calendarのカレンダー画面' },
+            { label: '達成状況', src: 'assets/reward-calendar-progress.jpg', alt: 'Reward Calendarの達成率とご褒美画面' },
+            { label: 'ショップ', src: 'assets/reward-calendar-shop.jpg', alt: 'Reward Calendarのご褒美ショップ画面' }
+          ]
+        },
+        naile: {
+          title: 'Naile',
+          scenes: [
+            { label: 'カラー', src: 'assets/nail-simulator-colors-cropped.jpg', alt: 'Naileのカラー選択画面' },
+            { label: 'パーツ', src: 'assets/nail-simulator-parts-cropped.jpg', alt: 'Naileのパーツ配置画面' }
+          ]
+        }
       };
 
-      function resetState() {
-        clearInterval(timerID);
-        timerID = null;
-        seconds = 0;
+      function showScene(index) {
+        const app = apps[activeKind];
+        activeIndex = (index + app.scenes.length) % app.scenes.length;
+        const scene = app.scenes[activeIndex];
+        screen.innerHTML = '<img class="real-screen-image" src="' + scene.src + '" alt="' + scene.alt + '">';
+        screen.dataset.kind = activeKind;
+        scenesBar.querySelectorAll('button').forEach((button, i) => {
+          button.classList.toggle('active', i === activeIndex);
+          button.setAttribute('aria-pressed', i === activeIndex ? 'true' : 'false');
+        });
+        requestAnimationFrame(() => screen.querySelector('img')?.classList.add('visible'));
       }
 
       function openMock(kind, trigger) {
-        resetState();
         lastTrigger = trigger;
-        title.textContent = kind === 'neko' ? 'ねこの暮らし手帳' : kind === 'reward' ? 'Reward Calendar' : 'Naile';
-        screen.innerHTML = views[kind];
+        activeKind = kind;
+        activeIndex = 0;
+        const app = apps[kind];
+        title.textContent = app.title;
+        scenesBar.innerHTML = app.scenes.map((scene, index) =>
+          '<button type="button" data-scene="' + index + '" aria-pressed="false">' + scene.label + '</button>'
+        ).join('');
+        showScene(0);
         modal.hidden = false;
         document.body.classList.add('mock-active');
         requestAnimationFrame(() => modal.classList.add('show'));
@@ -193,92 +182,28 @@
       function closeMock() {
         modal.classList.remove('show');
         document.body.classList.remove('mock-active');
-        resetState();
-        setTimeout(() => { modal.hidden = true; screen.innerHTML = ''; lastTrigger?.focus(); }, 260);
+        setTimeout(() => {
+          modal.hidden = true;
+          screen.innerHTML = '';
+          scenesBar.innerHTML = '';
+          lastTrigger?.focus();
+        }, 260);
       }
 
       document.addEventListener('click', (event) => {
         const opener = event.target.closest('.mock-open');
         if (opener) return openMock(opener.dataset.mock, opener);
         if (event.target.closest('[data-mock-close]')) return closeMock();
-
-        const cat = event.target.closest('[data-cat]');
-        if (cat) {
-          screen.querySelectorAll('[data-cat]').forEach(x => x.classList.remove('active'));
-          cat.classList.add('active');
-          const tororo = cat.dataset.cat === 'とろろ';
-          screen.querySelector('[data-cat-name]').textContent = cat.dataset.cat;
-          screen.querySelector('[data-cat-note]').textContent = tororo ? 'キーボードの上に座る甘えん坊です' : '毎朝4時ごろに起こしにきます';
-          screen.querySelector('.neko-avatar').textContent = tororo ? '🐱' : '🐈';
-        }
-
-        const care = event.target.closest('[data-care]');
-        if (care) {
-          care.classList.toggle('done');
-          const count = screen.querySelectorAll('[data-care].done').length;
-          screen.querySelector('[data-care-count]').textContent = count + ' / 3';
-        }
-
-        const timer = event.target.closest('[data-timer-toggle]');
-        if (timer) {
-          if (timerID) {
-            clearInterval(timerID); timerID = null; timer.textContent = '再開';
-          } else {
-            timer.textContent = 'ストップ';
-            timerID = setInterval(() => {
-              seconds += 1;
-              screen.querySelector('[data-timer]').textContent = '00:' + String(seconds).padStart(2,'0');
-            }, 1000);
-          }
-        }
-
-        const stamp = event.target.closest('[data-stamp]');
-        if (stamp && !stamp.classList.contains('done')) {
-          stamp.classList.add('done');
-          stamp.querySelector('i').textContent = '♥';
-          screen.querySelector('[data-points]').textContent = '5 pt';
-          const day = screen.querySelector('[data-day="3"]');
-          day.classList.add('done','pop');
-          screen.querySelector('[data-rate]').textContent = '14%';
-          for (let i=0;i<10;i++) {
-            const bit=document.createElement('span'); bit.className='confetti'; bit.textContent=i%2?'♥':'✦';
-            bit.style.setProperty('--x',(Math.random()*180-90)+'px'); bit.style.setProperty('--r',(Math.random()*120-60)+'deg');
-            stamp.appendChild(bit); setTimeout(()=>bit.remove(),900);
-          }
-        }
-
-        const reward = event.target.closest('[data-reward]');
-        if (reward) {
-          reward.innerHTML = screen.querySelector('[data-points]').textContent === '5 pt' ? 'ご褒美を選べます！ <span>♥</span>' : 'まず目標を達成しよう <span>☺</span>';
-          reward.classList.add('pulse');
-        }
-
-        const swatch = event.target.closest('[data-color]');
-        if (swatch) {
-          screen.querySelectorAll('[data-color]').forEach(x=>x.classList.remove('active'));
-          swatch.classList.add('active');
-          screen.style.setProperty('--mock-nail-color',swatch.dataset.color);
-          screen.querySelector('[data-color-name]').textContent=swatch.dataset.name;
-        }
-
-        const nail = event.target.closest('[data-nail]');
-        if (nail) {
-          screen.querySelectorAll('[data-nail]').forEach(x=>x.classList.remove('active'));
-          nail.classList.add('active');
-        }
-
-        const part = event.target.closest('.parts [data-part]');
-        if (part) {
-          screen.querySelectorAll('.parts [data-part]').forEach(x=>x.classList.remove('active'));
-          part.classList.add('active');
-          const activeNail=screen.querySelector('[data-nail].active');
-          activeNail.dataset.part=part.dataset.part;
-          screen.querySelector('[data-part-note]').textContent='選択中の爪にパーツを置きました。';
-        }
+        const sceneButton = event.target.closest('[data-scene]');
+        if (sceneButton) return showScene(Number(sceneButton.dataset.scene));
+        if (event.target.closest('#mockScreen') && !modal.hidden) showScene(activeIndex + 1);
       });
 
       document.addEventListener('keydown', (event) => {
-        if (event.key === 'Escape' && !modal.hidden) closeMock();
+        if (modal.hidden) return;
+        if (event.key === 'Escape') closeMock();
+        if (event.key === 'ArrowRight') showScene(activeIndex + 1);
+        if (event.key === 'ArrowLeft') showScene(activeIndex - 1);
       });
     })();
   </script>
