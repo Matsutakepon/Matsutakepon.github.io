@@ -10,7 +10,7 @@
   <meta property="og:type" content="website">
   <meta property="og:image" content="https://matsutakepon.github.io/assets/og-v2.png">
   <link rel="icon" href="assets/favicon.svg">
-  <link rel="stylesheet" href="styles.css?v=10">
+  <link rel="stylesheet" href="styles.css?v=11">
 </head>
 <body>
   <header class="nav shell">
@@ -94,12 +94,11 @@
         <button type="button" class="mock-close" data-mock-close aria-label="モックアップを閉じる">×</button>
       </header>
       <div class="mock-stage">
-        <div class="mock-scenes" id="mockScenes" aria-label="表示する画面"></div>
         <div class="mock-phone">
           <div class="mock-screen" id="mockScreen" aria-live="polite"></div>
           <div class="mock-home-indicator"></div>
         </div>
-        <p>実際のアプリ画面を使用しています。画面または上の項目をタップすると切り替わります。</p>
+        <p>主要な操作をブラウザ上で試せるデモです。画面を閉じると初期状態に戻ります。</p>
       </div>
     </section>
   </div>
@@ -119,60 +118,35 @@
     (() => {
       const modal = document.querySelector('#mockModal');
       const screen = document.querySelector('#mockScreen');
-      const scenesBar = document.querySelector('#mockScenes');
       const title = document.querySelector('#mockTitle');
       let lastTrigger = null;
-      let activeKind = '';
-      let activeIndex = 0;
 
       const apps = {
         neko: {
           title: 'ねこの暮らし手帳',
-          scenes: [
-            { label: '今日', src: 'assets/neko-techo-home.png', alt: 'ねこの暮らし手帳の今日のお世話画面' },
-            { label: '遊びタイマー', src: 'assets/neko-techo-timer.png', alt: 'ねこの暮らし手帳の遊びタイマー画面' }
-          ]
+          src: 'demos/nekotecho/?portfolio-demo=1'
         },
         reward: {
           title: 'Reward Calendar',
-          scenes: [
-            { label: 'カレンダー', src: 'assets/reward-calendar-home.jpg', alt: 'Reward Calendarのカレンダー画面' },
-            { label: '達成状況', src: 'assets/reward-calendar-progress.jpg', alt: 'Reward Calendarの達成率とご褒美画面' },
-            { label: 'ショップ', src: 'assets/reward-calendar-shop.jpg', alt: 'Reward Calendarのご褒美ショップ画面' }
-          ]
+          src: 'demos/reward/'
         },
         naile: {
           title: 'Naile',
-          scenes: [
-            { label: 'カラー', src: 'assets/nail-simulator-colors-cropped.jpg', alt: 'Naileのカラー選択画面' },
-            { label: 'パーツ', src: 'assets/nail-simulator-parts-cropped.jpg', alt: 'Naileのパーツ配置画面' }
-          ]
+          src: 'https://divine-wave-368b.noiz-lost.workers.dev/'
         }
       };
 
-      function showScene(index) {
-        const app = apps[activeKind];
-        activeIndex = (index + app.scenes.length) % app.scenes.length;
-        const scene = app.scenes[activeIndex];
-        screen.innerHTML = '<img class="real-screen-image" src="' + scene.src + '" alt="' + scene.alt + '">';
-        screen.dataset.kind = activeKind;
-        scenesBar.querySelectorAll('button').forEach((button, i) => {
-          button.classList.toggle('active', i === activeIndex);
-          button.setAttribute('aria-pressed', i === activeIndex ? 'true' : 'false');
-        });
-        requestAnimationFrame(() => screen.querySelector('img')?.classList.add('visible'));
-      }
-
       function openMock(kind, trigger) {
         lastTrigger = trigger;
-        activeKind = kind;
-        activeIndex = 0;
         const app = apps[kind];
         title.textContent = app.title;
-        scenesBar.innerHTML = app.scenes.map((scene, index) =>
-          '<button type="button" data-scene="' + index + '" aria-pressed="false">' + scene.label + '</button>'
-        ).join('');
-        showScene(0);
+        screen.dataset.kind = kind;
+        const frame = document.createElement('iframe');
+        frame.src = app.src;
+        frame.title = app.title + ' 操作デモ';
+        frame.loading = 'eager';
+        frame.allow = 'camera; clipboard-write';
+        screen.replaceChildren(frame);
         modal.hidden = false;
         document.body.classList.add('mock-active');
         requestAnimationFrame(() => modal.classList.add('show'));
@@ -185,7 +159,6 @@
         setTimeout(() => {
           modal.hidden = true;
           screen.innerHTML = '';
-          scenesBar.innerHTML = '';
           lastTrigger?.focus();
         }, 260);
       }
@@ -194,16 +167,11 @@
         const opener = event.target.closest('.mock-open');
         if (opener) return openMock(opener.dataset.mock, opener);
         if (event.target.closest('[data-mock-close]')) return closeMock();
-        const sceneButton = event.target.closest('[data-scene]');
-        if (sceneButton) return showScene(Number(sceneButton.dataset.scene));
-        if (event.target.closest('#mockScreen') && !modal.hidden) showScene(activeIndex + 1);
       });
 
       document.addEventListener('keydown', (event) => {
         if (modal.hidden) return;
         if (event.key === 'Escape') closeMock();
-        if (event.key === 'ArrowRight') showScene(activeIndex + 1);
-        if (event.key === 'ArrowLeft') showScene(activeIndex - 1);
       });
     })();
   </script>
