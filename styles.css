@@ -81,9 +81,19 @@ footer{background:var(--orange);padding:72px 0 34px}.footer-github{font-size:14p
 .mock-dialog{width:min(520px,100%)}
 .mock-stage{padding-inline:6px}
 .mock-phone{width:min(410px,46vh,calc(100vw - 20px))}
-.mock-screen::after{content:"";position:absolute;z-index:6;top:0;right:0;bottom:0;width:8px;background:#111915;pointer-events:none}
 .mock-stage>p{max-width:390px;text-align:center}
 @media(max-width:760px){
   .mock-dialog{width:100%}
   .mock-phone{width:min(410px,47vh,calc(100vw - 8px))}
 }
+
+/* Present the device as the top layer instead of placing it inside a panel. */
+.mock-dialog{width:min(760px,100%);background:transparent;border:0;box-shadow:none;overflow:visible}
+.mock-stage{background:transparent}
+.mock-toolbar{position:absolute;z-index:4;top:0;left:0;right:0;border:0;background:transparent;color:#fff;pointer-events:none}
+.mock-toolbar>div,.mock-close{pointer-events:auto}
+.mock-toolbar strong,.mock-toolbar span{text-shadow:0 1px 14px rgba(0,0,0,.55)}
+.mock-close{position:fixed;z-index:8;top:20px;right:20px;background:#f5f1e9;color:var(--ink);box-shadow:0 8px 28px rgba(0,0,0,.2)}
+.mock-phone{z-index:6}
+.mock-stage>p{color:rgba(255,255,255,.78);text-shadow:0 1px 10px rgba(0,0,0,.6)}
+@media(max-width:760px){.mock-toolbar>div{display:none}.mock-close{top:12px;right:12px}}
