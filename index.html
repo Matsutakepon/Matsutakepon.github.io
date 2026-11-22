@@ -10,7 +10,7 @@
   <meta property="og:type" content="website">
   <meta property="og:image" content="https://matsutakepon.github.io/assets/og-v2.png">
   <link rel="icon" href="assets/favicon.svg">
-  <link rel="stylesheet" href="styles.css?v=17">
+  <link rel="stylesheet" href="styles.css?v=18">
 </head>
 <body>
   <header class="nav shell">
@@ -36,15 +36,61 @@
           </dl>
         </div>
       </div>
-      <div class="experience" aria-labelledby="experience-title">
-        <div class="experience-head"><p class="section-kicker">EXPERIENCE</p><h2 id="experience-title">これまでの経験</h2></div>
-        <div class="experience-grid">
-          <article class="experience-card"><p class="experience-number">01</p><h3>SAP Basis・システム運用</h3><p>基幹業務システム領域のITエンジニアとして約5年勤務。SAP Basisの運用にも携わり、企業の業務を支えるシステムを扱ってきました。</p><span>IT ENGINEERING</span></article>
-          <article class="experience-card"><p class="experience-number">02</p><h3>新卒採用</h3><p>人事・採用担当として、新卒採用を経験。採用する企業と、仕事を探す人の両方に向き合ってきました。</p><span>RECRUITING</span></article>
-          <article class="experience-card"><p class="experience-number">03</p><h3>中途採用</h3><p>スタートアップから大手コンサルティングファームまで、さまざまな企業の中途採用を支援してきました。</p><span>RECRUITING</span></article>
-          <article class="experience-card"><p class="experience-number">04</p><h3>学習者サポート</h3><p>現在はProgateのタレントコンシェルジュとして、学習を続ける方々をサポートしています。</p><span>LEARNER SUPPORT</span></article>
+      <section class="journey" id="journey" aria-labelledby="journey-title">
+        <div class="journey-copy">
+          <p class="section-kicker">JOURNEY</p>
+          <h2 id="journey-title">北海道から東京、<br>そして新潟へ。</h2>
+          <ol class="journey-stops" aria-label="これまで暮らした場所">
+            <li data-stop="hokkaido"><span>北海道</span></li>
+            <li data-stop="tokyo"><span>東京</span></li>
+            <li data-stop="niigata"><span>新潟</span></li>
+          </ol>
         </div>
-      </div>
+        <div class="journey-map-wrap">
+          <svg class="journey-map" viewBox="0 0 760 620" role="img" aria-labelledby="map-title map-desc">
+            <title id="map-title">北海道から東京を経て新潟へ移動する日本地図</title>
+            <desc id="map-desc">北海道、東京、新潟が順番に光り、飛行機が弧を描いて移動します。</desc>
+            <defs>
+              <marker id="routeArrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+                <path d="M0 0L10 5 0 10Z" fill="#d7ef62" />
+              </marker>
+            </defs>
+            <g class="map-grid" aria-hidden="true">
+              <path d="M40 110H720M40 220H720M40 330H720M40 440H720M40 550H720" />
+              <path d="M150 35V585M300 35V585M450 35V585M600 35V585" />
+            </g>
+            <g class="japan-land" aria-hidden="true">
+              <path d="M520 70C550 45 610 42 640 65L672 54 660 86 684 103 646 114 628 145 586 130 552 148 540 118 510 102Z" />
+              <path d="M520 144C548 164 564 188 550 220 538 248 514 273 501 303 486 335 466 358 440 382 409 410 377 432 344 451 309 472 269 487 230 482L190 468 210 445 255 440 299 422 339 397 377 370 413 340 445 307 469 270 491 230 507 190Z" />
+              <path d="M319 454L355 448 390 457 372 477 331 480 299 470Z" />
+              <path d="M196 451L222 468 218 499 201 516 184 552 161 545 158 516 139 497 157 470Z" />
+              <path d="M113 558L124 566 115 579 102 572Z" />
+              <path d="M72 584L82 590 74 600 64 594Z" />
+            </g>
+            <g class="routes" aria-hidden="true">
+              <path id="routeHokkaidoTokyo" class="route route-one" d="M594 98Q690 240 454 354" />
+              <path id="routeTokyoNiigata" class="route route-two" d="M454 354Q376 310 435 281" />
+            </g>
+            <g class="map-stop stop-hokkaido" data-map-stop="hokkaido" transform="translate(594 98)">
+              <circle class="stop-halo" r="30"/><circle class="stop-dot" r="7"/>
+              <text x="-18" y="-26" text-anchor="end">北海道</text>
+            </g>
+            <g class="map-stop stop-tokyo" data-map-stop="tokyo" transform="translate(454 354)">
+              <circle class="stop-halo" r="30"/><circle class="stop-dot" r="7"/>
+              <text x="18" y="27">東京</text>
+            </g>
+            <g class="map-stop stop-niigata" data-map-stop="niigata" transform="translate(435 281)">
+              <circle class="stop-halo" r="30"/><circle class="stop-dot" r="7"/>
+              <text x="-18" y="-18" text-anchor="end">新潟</text>
+            </g>
+            <g id="journeyPlane" class="journey-plane" aria-hidden="true">
+              <circle r="22" />
+              <path d="M-15-3L-4-5 4-17 9-16 5-4 15 0 15 4 5 3 1 15-3 16-5 3-15 1Z" />
+            </g>
+          </svg>
+          <p class="journey-status" aria-live="polite">北海道</p>
+        </div>
+      </section>
     </section>
     <section class="cats shell" id="cats">
       <div class="section-head"><p class="section-kicker">CATS</p><h1>まつたけととろろ</h1></div>
@@ -103,6 +149,109 @@
     </section>
   </div>
   <footer><div class="shell"><a class="footer-github" href="https://github.com/Matsutakepon" target="_blank" rel="noreferrer">GitHubを見る ↗</a><div class="copyright"><span>© 2026 Matsutakepon</span><a href="#top">ページ上部へ</a></div></div></footer>
+  <script>
+    (() => {
+      const journey = document.querySelector('#journey');
+      const plane = journey?.querySelector('.journey-plane');
+      const status = journey?.querySelector('.journey-status');
+      const routes = [
+        journey?.querySelector('#routeHokkaidoTokyo'),
+        journey?.querySelector('#routeTokyoNiigata')
+      ];
+      if (!journey || !plane || routes.some((route) => !route)) return;
+
+      const routeLengths = routes.map((route) => route.getTotalLength());
+      routes.forEach((route, index) => {
+        route.style.strokeDasharray = routeLengths[index];
+        route.style.strokeDashoffset = routeLengths[index];
+      });
+
+      let animationFrame = 0;
+      let startedAt = 0;
+      let currentStop = '';
+      const duration = 10500;
+      const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+      const clamp = (value) => Math.max(0, Math.min(1, value));
+      const ease = (value) => 1 - Math.pow(1 - clamp(value), 3);
+
+      function setStop(name) {
+        if (name === currentStop) return;
+        currentStop = name;
+        journey.querySelectorAll('[data-map-stop], [data-stop]').forEach((element) => {
+          element.classList.toggle('active', element.dataset.mapStop === name || element.dataset.stop === name);
+        });
+        const labels = { hokkaido: '北海道', tokyo: '東京', niigata: '新潟' };
+        status.textContent = labels[name];
+      }
+
+      function drawRoute(index, progress) {
+        const value = ease(progress);
+        routes[index].style.strokeDashoffset = routeLengths[index] * (1 - value);
+        routes[index].style.markerEnd = value > .96 ? 'url(#routeArrow)' : 'none';
+        return value;
+      }
+
+      function movePlane(route, progress) {
+        const length = route.getTotalLength();
+        const distance = length * progress;
+        const point = route.getPointAtLength(distance);
+        const next = route.getPointAtLength(Math.min(length, distance + 2));
+        const angle = Math.atan2(next.y - point.y, next.x - point.x) * 180 / Math.PI;
+        plane.setAttribute('transform', `translate(${point.x} ${point.y}) rotate(${angle})`);
+        plane.classList.add('flying');
+      }
+
+      function render(now) {
+        const elapsed = (now - startedAt) % duration;
+        plane.classList.remove('flying');
+
+        if (elapsed < 1800) {
+          setStop('hokkaido');
+          drawRoute(0, 0); drawRoute(1, 0);
+        } else if (elapsed < 4800) {
+          setStop('hokkaido');
+          const progress = drawRoute(0, (elapsed - 1800) / 3000);
+          drawRoute(1, 0);
+          movePlane(routes[0], progress);
+        } else if (elapsed < 6200) {
+          setStop('tokyo');
+          drawRoute(0, 1); drawRoute(1, 0);
+        } else if (elapsed < 8000) {
+          setStop('tokyo');
+          drawRoute(0, 1);
+          const progress = drawRoute(1, (elapsed - 6200) / 1800);
+          movePlane(routes[1], progress);
+        } else {
+          setStop('niigata');
+          drawRoute(0, 1); drawRoute(1, 1);
+        }
+        animationFrame = requestAnimationFrame(render);
+      }
+
+      if (reducedMotion) {
+        setStop('niigata');
+        drawRoute(0, 1); drawRoute(1, 1);
+        journey.classList.add('is-visible');
+        return;
+      }
+
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            journey.classList.add('is-visible');
+            cancelAnimationFrame(animationFrame);
+            startedAt = performance.now();
+            currentStop = '';
+            animationFrame = requestAnimationFrame(render);
+          } else {
+            cancelAnimationFrame(animationFrame);
+          }
+        });
+      }, { threshold: .35 });
+      observer.observe(journey);
+    })();
+  </script>
   <script>
     if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
       document.documentElement.classList.add('motion-ready');
