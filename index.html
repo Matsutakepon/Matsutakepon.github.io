@@ -10,7 +10,7 @@
   <meta property="og:type" content="website">
   <meta property="og:image" content="https://matsutakepon.github.io/assets/og-v2.png">
   <link rel="icon" href="assets/favicon.svg">
-  <link rel="stylesheet" href="styles.css?v=19">
+  <link rel="stylesheet" href="styles.css?v=20">
 </head>
 <body>
   <header class="nav shell">
@@ -38,13 +38,14 @@
       </div>
       <section class="journey" id="journey" aria-label="北海道から東京を経て新潟へ移動する地図">
         <div class="journey-map-wrap">
-          <svg class="journey-map" viewBox="0 0 1000 1049" role="img" aria-labelledby="map-title map-desc">
+          <svg class="journey-map" viewBox="0 0 1000 1049" preserveAspectRatio="xMidYMid meet" role="img" aria-labelledby="map-title map-desc">
             <title id="map-title">北海道から東京を経て新潟へ移動する日本地図</title>
             <desc id="map-desc">北海道、東京、新潟が順番に光り、飛行機が弧を描いて移動します。</desc>
             <defs>
-              <marker id="routeArrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5 0 10Z" fill="#d7ef62" /></marker>
+              <marker id="routeArrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5 0 10Z" fill="#ed6b43" /></marker>
             </defs>
             <image class="journey-map-source" href="assets/japan-prefecture-map.svg" x="0" y="0" width="1000" height="1049" aria-hidden="true" />
+            <rect class="okinawa-cover" x="0" y="0" width="370" height="360" aria-hidden="true" />
             <g class="routes" aria-hidden="true">
               <path id="routeHokkaidoTokyo" class="route route-one" d="M790 165Q955 455 625 705" />
               <path id="routeTokyoNiigata" class="route route-two" d="M625 705Q475 650 585 565" />
@@ -59,7 +60,7 @@
               <circle class="stop-halo" r="40"/><circle class="stop-dot" r="9"/><text x="-26" y="-25" text-anchor="end">新潟</text>
             </g>
             <g id="journeyPlane" class="journey-plane" aria-hidden="true">
-              <circle r="26"/><path transform="scale(1.2)" d="M-15-3L-4-5 4-17 9-16 5-4 15 0 15 4 5 3 1 15-3 16-5 3-15 1Z" />
+              <image href="assets/airplane.svg" x="-34" y="-34" width="68" height="68" />
             </g>
           </svg>
         </div>
@@ -139,9 +140,7 @@
       });
 
       let animationFrame = 0;
-      let startedAt = 0;
       let currentStop = '';
-      const duration = 10500;
       const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
       const clamp = (value) => Math.max(0, Math.min(1, value));
@@ -172,31 +171,35 @@
         plane.classList.add('flying');
       }
 
-      function render(now) {
-        const elapsed = (now - startedAt) % duration;
+      function render() {
+        const rect = journey.getBoundingClientRect();
+        const travel = Math.max(1, rect.height - window.innerHeight * .72);
+        const progress = clamp((window.innerHeight * .18 - rect.top) / travel);
         plane.classList.remove('flying');
 
-        if (elapsed < 1800) {
+        if (progress < .08) {
           setStop('hokkaido');
           drawRoute(0, 0); drawRoute(1, 0);
-        } else if (elapsed < 4800) {
+          movePlane(routes[0], 0);
+        } else if (progress < .52) {
           setStop('hokkaido');
-          const progress = drawRoute(0, (elapsed - 1800) / 3000);
+          const routeProgress = drawRoute(0, (progress - .08) / .44);
           drawRoute(1, 0);
-          movePlane(routes[0], progress);
-        } else if (elapsed < 6200) {
+          movePlane(routes[0], routeProgress);
+        } else if (progress < .64) {
           setStop('tokyo');
           drawRoute(0, 1); drawRoute(1, 0);
-        } else if (elapsed < 8000) {
+          movePlane(routes[0], 1);
+        } else if (progress < .94) {
           setStop('tokyo');
           drawRoute(0, 1);
-          const progress = drawRoute(1, (elapsed - 6200) / 1800);
-          movePlane(routes[1], progress);
+          const routeProgress = drawRoute(1, (progress - .64) / .30);
+          movePlane(routes[1], routeProgress);
         } else {
           setStop('niigata');
           drawRoute(0, 1); drawRoute(1, 1);
+          movePlane(routes[1], 1);
         }
-        animationFrame = requestAnimationFrame(render);
       }
 
       if (reducedMotion) {
@@ -206,20 +209,14 @@
         return;
       }
 
-      const observer = new IntersectionObserver((entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            journey.classList.add('is-visible');
-            cancelAnimationFrame(animationFrame);
-            startedAt = performance.now();
-            currentStop = '';
-            animationFrame = requestAnimationFrame(render);
-          } else {
-            cancelAnimationFrame(animationFrame);
-          }
-        });
-      }, { threshold: .35 });
-      observer.observe(journey);
+      const requestRender = () => {
+        cancelAnimationFrame(animationFrame);
+        animationFrame = requestAnimationFrame(render);
+      };
+      journey.classList.add('is-visible');
+      render();
+      window.addEventListener('scroll', requestRender, { passive: true });
+      window.addEventListener('resize', requestRender);
     })();
   </script>
   <script>
