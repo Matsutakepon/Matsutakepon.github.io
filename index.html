@@ -10,7 +10,7 @@
   <meta property="og:type" content="website">
   <meta property="og:image" content="https://matsutakepon.github.io/assets/og-v2.png">
   <link rel="icon" href="assets/favicon.svg">
-  <link rel="stylesheet" href="styles.css?v=21">
+  <link rel="stylesheet" href="styles.css?v=22">
 </head>
 <body>
   <header class="nav shell">
@@ -47,10 +47,10 @@
             <image class="journey-map-source" href="assets/japan-prefecture-map.svg" x="0" y="0" width="1000" height="1049" aria-hidden="true" />
             <rect class="okinawa-cover" x="0" y="0" width="370" height="360" aria-hidden="true" />
             <g class="routes" aria-hidden="true">
-              <path id="routeHokkaidoTokyo" class="route route-one" d="M820 250C955 350 985 565 625 705" />
-              <path id="routeTokyoNiigata" class="route route-two" d="M625 705C540 695 515 620 585 565" />
+              <path id="routeHokkaidoTokyo" class="route route-one" d="M702 225C875 315 910 575 625 705" />
+              <path id="routeTokyoNiigata" class="route route-two" d="M625 705C555 700 585 620 585 565" />
             </g>
-            <g class="map-stop stop-hokkaido" data-map-stop="hokkaido" transform="translate(820 250)">
+            <g class="map-stop stop-hokkaido" data-map-stop="hokkaido" transform="translate(702 225)">
               <circle class="stop-halo" r="40"/><circle class="stop-dot" r="9"/><text x="-28" y="-34" text-anchor="end">北海道</text>
             </g>
             <g class="map-stop stop-tokyo" data-map-stop="tokyo" transform="translate(625 705)">
@@ -160,8 +160,9 @@
         const length = route.getTotalLength();
         const distance = length * progress;
         const point = route.getPointAtLength(distance);
+        const previous = route.getPointAtLength(Math.max(0, distance - 2));
         const next = route.getPointAtLength(Math.min(length, distance + 2));
-        const angle = Math.atan2(next.y - point.y, next.x - point.x) * 180 / Math.PI;
+        const angle = Math.atan2(next.y - previous.y, next.x - previous.x) * 180 / Math.PI;
         plane.setAttribute('transform', `translate(${point.x} ${point.y}) rotate(${angle + 90})`);
         plane.classList.add('flying');
       }
