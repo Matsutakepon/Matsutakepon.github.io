@@ -11,6 +11,13 @@
   <meta property="og:image" content="https://matsutakepon.github.io/assets/og-v2.png">
   <link rel="icon" href="assets/favicon.svg">
   <link rel="stylesheet" href="styles.css?v=24">
+  <style>
+    #journey .journey-map{height:calc(100% - 2 * var(--map-gutter) - 58px)}
+    .journey-caption{position:absolute;inset:auto var(--map-gutter) var(--map-gutter);padding:10px 0 0;border-top:1px solid var(--line);text-align:center;font-size:clamp(.875rem,2.8vw,1rem);line-height:1.5}
+    .journey-caption p{margin:0}
+    .journey-caption strong{margin-inline-end:.65em;font-variant-numeric:tabular-nums}
+    @media(prefers-reduced-motion:reduce){#journey .journey-map{height:calc(100% - 2 * var(--map-gutter) - 90px)}}
+  </style>
 </head>
 <body>
   <header class="site-header shell">
@@ -61,6 +68,11 @@
               <image href="assets/airplane.svg" x="-34" y="-34" width="68" height="68" />
             </g>
           </svg>
+          <div class="journey-caption">
+            <p data-caption="hokkaido"><strong>1991年〜2010年</strong>北海道で過ごす</p>
+            <p data-caption="tokyo"><strong>2010年</strong>大学進学を機に東京へ</p>
+            <p data-caption="niigata"><strong>2024年</strong>新潟へ移住</p>
+          </div>
         </div>
       </section>
     </section>
@@ -125,11 +137,13 @@
     (() => {
       const journey = document.querySelector('#journey');
       const plane = journey?.querySelector('.journey-plane');
+      const mapFrame = journey?.querySelector('.journey-map-wrap');
+      const captions = journey?.querySelectorAll('[data-caption]');
       const routes = [
         journey?.querySelector('#routeHokkaidoTokyo'),
         journey?.querySelector('#routeTokyoNiigata')
       ];
-      if (!journey || !plane || routes.some((route) => !route)) return;
+      if (!journey || !mapFrame || !plane || routes.some((route) => !route)) return;
 
       let animationFrame = 0;
       let currentStop = '';
@@ -141,6 +155,9 @@
       function setStop(name) {
         if (name === currentStop) return;
         currentStop = name;
+        if (!reducedMotion) captions.forEach((caption) => {
+          caption.hidden = caption.dataset.caption !== name;
+        });
         journey.querySelectorAll('[data-map-stop], [data-stop]').forEach((element) => {
           element.classList.toggle('active', element.dataset.mapStop === name || element.dataset.stop === name);
         });
@@ -167,8 +184,9 @@
 
       function render() {
         const rect = journey.getBoundingClientRect();
-        const travel = Math.max(1, rect.height - window.innerHeight * .72);
-        const progress = clamp((window.innerHeight * .18 - rect.top) / travel);
+        const travel = Math.max(1, rect.height - mapFrame.offsetHeight);
+        const stickyTop = parseFloat(getComputedStyle(mapFrame).top) || 0;
+        const progress = clamp((stickyTop - rect.top) / travel);
         plane.classList.remove('flying');
 
         if (progress < .08) {
